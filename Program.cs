@@ -36,7 +36,7 @@ namespace TicTacToeGame
             char[] board = new char[10];
             for (int i = 1; i < 10; i++)
             {
-                board[i] = '0';
+                board[i] = ' ';
             }
             return board;
         }
