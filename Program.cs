@@ -10,6 +10,18 @@ namespace TicTacToeGame
             TicTacToe t = new TicTacToe();
             t.CreateBoard();
             char pLetter = t.ChooseLetter();
+            bool val = true;
+            while (val)
+            {
+                if (!(pLetter.Equals('X') || pLetter.Equals('O')))
+                {
+                    pLetter = t.ChooseLetter();
+                }
+                else
+                {
+                    val = false;
+                }
+            }
             char cLetter='X';
             if(pLetter.Equals('X'))
             {
@@ -32,9 +44,8 @@ namespace TicTacToeGame
         public char ChooseLetter()
         {
             Console.WriteLine("Choose a letter among X and O");
-            char pLetter = Convert.ToChar(Console.Read());
-
-            return pLetter;
+            char pLetter = Convert.ToChar(Console.ReadLine());
+                return pLetter;
         }
     }
 
