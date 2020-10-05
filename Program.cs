@@ -5,14 +5,10 @@ namespace TicTacToeGame
     class Program
     {
         static void Main(string[] args)
-        {
-<<<<<<< HEAD
+        { 
             Console.WriteLine("Hello, Welcome to TicTacToeGame");
-=======
-            Console.WriteLine("Hello Welcome to TictacToe Game");
             TicTacToe t = new TicTacToe();
             t.CreateBoard();
->>>>>>> CreateBoard_UC1
         }
     }
 
