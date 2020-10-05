@@ -11,24 +11,25 @@ namespace TicTacToeGame
             TicTacToe t = new TicTacToe();
             char[] board = t.CreateBoard();
             char pLetter = t.ChooseLetter();
-            bool val = true;
-            while (val)
-            {
-                if (!(pLetter.Equals('X') || pLetter.Equals('O')))
-                {
-                    pLetter = t.ChooseLetter();
-                }
-                else
-                {
-                    val = false;
-                }
-            }
             char cLetter='X';
             if(pLetter.Equals('X'))
             {
                 cLetter = 'O';
             }
             t.PrintBoard(board);
+
+            Console.WriteLine("Choose a position among 1 to 9");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            bool check_if_empty = t.check_Availability(board, choice);
+            if(check_if_empty== false)
+            {
+                Console.WriteLine("The position you chose is full, Please choose another position");
+            }
+            else
+            {
+                board[choice] = pLetter;
+                t.PrintBoard(board);
+            }
         }
     }
 
@@ -48,7 +49,19 @@ namespace TicTacToeGame
         {
             Console.WriteLine("Choose a letter among X and O");
             char pLetter = Convert.ToChar(Console.ReadLine());
-                return pLetter;
+            bool val = true;
+            while (val)
+            {
+                if (!(pLetter.Equals('X') || pLetter.Equals('O')))
+                {
+                    pLetter = ChooseLetter();
+                }
+                else
+                {
+                    val = false;
+                }
+            }
+            return pLetter;
         }
 
         public void PrintBoard(char[] board)
@@ -63,6 +76,20 @@ namespace TicTacToeGame
                 Console.Write("\n");
             }
         }
+
+        public bool check_Availability(char[] board, int k)
+        {
+            bool val = false;
+            if(board[k].Equals('0'))
+            {
+                val= true;
+            }
+            return val;
+        }
+
+        
+
+
     }
 
 
