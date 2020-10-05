@@ -78,7 +78,7 @@ namespace TicTacToeGame
         public bool check_Availability(char[] board, int k)
         {
             bool val = false;
-            if(board[k].Equals('0'))
+            if(board[k].Equals(' '))
             {
                 val= true;
             }
