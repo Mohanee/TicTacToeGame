@@ -16,19 +16,30 @@ namespace TicTacToeGame
             {
                 cLetter = 'O';
             }
+            Console.WriteLine("Player's Letter = " + pLetter);
+            Console.WriteLine("Computer's Letter = " + cLetter);
             t.PrintBoard(board);
-
-            Console.WriteLine("Choose a position among 1 to 9");
-            int choice = Convert.ToInt32(Console.ReadLine());
-            bool check_if_empty = t.check_Availability(board, choice);
-            if(check_if_empty== false)
+            bool playVal = true;
+            while (playVal)
             {
-                Console.WriteLine("The position you chose is full, Please choose another position");
-            }
-            else
-            {
-                board[choice] = pLetter;
-                t.PrintBoard(board);
+                Console.WriteLine("Choose a position among 1 to 9");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                bool check_if_empty = t.check_Availability(board, choice);
+                if (check_if_empty == false)
+                {
+                    Console.WriteLine("The position you chose is full, Please choose another position");
+                }
+                else
+                {
+                    board[choice] = pLetter;
+                    t.PrintBoard(board);
+                }
+                Console.WriteLine("Want to play again? (Y/N)");
+                char playAgain = Convert.ToChar(Console.ReadLine());
+                if(playAgain == 'N')
+                {
+                    playVal = false;
+                }
             }
         }
     }
@@ -70,10 +81,11 @@ namespace TicTacToeGame
             {
                 for(int j=0; j<3; j++)
                 {
-                    Console.Write(board[i]+"\t");
+                    Console.Write("|\t"+board[i]+"\t ");
                     i++;
                 }
                 Console.Write("\n");
+                Console.WriteLine("------------------------------------------------");
             }
         }
 
