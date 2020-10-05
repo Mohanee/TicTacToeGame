@@ -23,24 +23,7 @@ namespace TicTacToeGame
             bool playVal = true;
             while (playVal)
             {
-                Console.WriteLine("Choose a position among 1 to 9");
-                int choice = Convert.ToInt32(Console.ReadLine());
-                bool check_if_empty = t.check_Availability(board, choice);
-                if (check_if_empty == false)
-                {
-                    Console.WriteLine("The position you chose is full, Please choose another position");
-                }
-                else
-                {
-                    board[choice] = pLetter;
-                    t.PrintBoard(board);
-                }
-                Console.WriteLine("Want to play again? (Y/N)");
-                char playAgain = Convert.ToChar(Console.ReadLine());
-                if(playAgain == 'N')
-                {
-                    playVal = false;
-                }
+                playVal =t.MakeAMove(board,pLetter);
             }
 
         }
@@ -102,6 +85,31 @@ namespace TicTacToeGame
             return val;
         }
 
+        public bool MakeAMove(char[] board,char pLetter)
+        {
+            Console.WriteLine("Choose a position among 1 to 9");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            bool check_if_empty = check_Availability(board, choice);
+            if (check_if_empty == false)
+            {
+                Console.WriteLine("The position you chose is full, Please choose another position");
+            }
+            else
+            {
+                board[choice] = pLetter;
+                PrintBoard(board);
+            }
+            bool playVal = true;
+            Console.WriteLine("Want to play again? (Y/N)");
+            char playAgain = Convert.ToChar(Console.ReadLine());
+            if (playAgain == 'N')
+            {
+                playVal = false;
+            }
+
+            return playVal;
+
+        }
         
     }
 
