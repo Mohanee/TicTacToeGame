@@ -16,6 +16,7 @@ namespace TicTacToeGame
             {
                 cLetter = 'O';
             }
+<<<<<<< HEAD
             Console.WriteLine("Player's Letter = " + pLetter);
             Console.WriteLine("Computer's Letter = " + cLetter);
             t.PrintBoard(board);
@@ -41,6 +42,8 @@ namespace TicTacToeGame
                     playVal = false;
                 }
             }
+=======
+>>>>>>> ChooseLetter_UC2
         }
     }
 
@@ -65,6 +68,7 @@ namespace TicTacToeGame
             {
                 if (!(pLetter.Equals('X') || pLetter.Equals('O')))
                 {
+                    Console.WriteLine("Please choose among the given options");
                     pLetter = ChooseLetter();
                 }
                 else
@@ -75,6 +79,7 @@ namespace TicTacToeGame
             return pLetter;
         }
 
+<<<<<<< HEAD
         public void PrintBoard(char[] board)
         {
             for(int i=1;i<10;)
@@ -102,6 +107,8 @@ namespace TicTacToeGame
         
 
 
+=======
+>>>>>>> ChooseLetter_UC2
     }
 
 
