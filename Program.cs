@@ -16,20 +16,6 @@ namespace TicTacToeGame
             {
                 cLetter = 'O';
             }
-            t.PrintBoard(board);
-
-            Console.WriteLine("Choose a position among 1 to 9");
-            int choice = Convert.ToInt32(Console.ReadLine());
-            bool check_if_empty = t.check_Availability(board, choice);
-            if(check_if_empty== false)
-            {
-                Console.WriteLine("The position you chose is full, Please choose another position");
-            }
-            else
-            {
-                board[choice] = pLetter;
-                t.PrintBoard(board);
-            }
         }
     }
 
@@ -54,6 +40,7 @@ namespace TicTacToeGame
             {
                 if (!(pLetter.Equals('X') || pLetter.Equals('O')))
                 {
+                    Console.WriteLine("Please choose among the given options");
                     pLetter = ChooseLetter();
                 }
                 else
@@ -63,32 +50,6 @@ namespace TicTacToeGame
             }
             return pLetter;
         }
-
-        public void PrintBoard(char[] board)
-        {
-            for(int i=1;i<10;)
-            {
-                for(int j=0; j<3; j++)
-                {
-                    Console.Write(board[i]+"\t");
-                    i++;
-                }
-                Console.Write("\n");
-            }
-        }
-
-        public bool check_Availability(char[] board, int k)
-        {
-            bool val = false;
-            if(board[k].Equals('0'))
-            {
-                val= true;
-            }
-            return val;
-        }
-
-        
-
 
     }
 
