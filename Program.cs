@@ -36,7 +36,7 @@ namespace TicTacToeGame
             char[] board = new char[10];
             for (int i = 1; i < 10; i++)
             {
-                board[i] = '0';
+                board[i] = ' ';
             }
             return board;
         }
@@ -78,7 +78,7 @@ namespace TicTacToeGame
         public bool check_Availability(char[] board, int k)
         {
             bool val = false;
-            if(board[k].Equals('0'))
+            if(board[k].Equals(' '))
             {
                 val= true;
             }
