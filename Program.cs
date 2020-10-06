@@ -114,13 +114,13 @@ namespace TicTacToeGame
 
         public void FirstPlayToss()
         {
-            int choice=0;
+            string choice=null;
             bool val = true;
             while (val)
             {
                 Console.WriteLine("What will you choose -- heads(1)/tails(0)?");
-                choice = Convert.ToChar(Console.ReadLine());
-                if(choice.Equals('1') || choice.Equals('0'))
+                choice = (Console.ReadLine());
+                if(choice[0].Equals('1') || choice[0].Equals('0'))
                 {
                     val = false;
                 }
@@ -130,9 +130,9 @@ namespace TicTacToeGame
                     val = true;
                 }
             }
-            choice = Convert.ToInt32(choice);
+            int choice2 = Convert.ToInt32(choice);
             Random rn = new Random();
-            if(rn.Next(0,2)==choice)
+            if(rn.Next(0,2)==choice2)
             {
                 Console.WriteLine("You got your desired side.So, will play first");
             }
