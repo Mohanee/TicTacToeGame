@@ -20,6 +20,7 @@ namespace TicTacToeGame
             Console.WriteLine("Player's Letter = " + pLetter);
             Console.WriteLine("Computer's Letter = " + cLetter);
             t.PrintBoard(board);
+            t.FirstPlayToss();
             bool playVal = true;
             while (playVal)
             {
@@ -109,6 +110,36 @@ namespace TicTacToeGame
 
             return playVal;
 
+        }
+
+        public void FirstPlayToss()
+        {
+            int choice=0;
+            bool val = true;
+            while (val)
+            {
+                Console.WriteLine("What will you choose -- heads(1)/tails(0)?");
+                choice = Convert.ToChar(Console.ReadLine());
+                if(choice.Equals('1') || choice.Equals('0'))
+                {
+                    val = false;
+                }
+                else
+                {
+                    Console.WriteLine("Please provide valid input(0/1).");
+                    val = true;
+                }
+            }
+            choice = Convert.ToInt32(choice);
+            Random rn = new Random();
+            if(rn.Next(0,2)==choice)
+            {
+                Console.WriteLine("You got your desired side.So, will play first");
+            }
+            else
+            {
+                Console.WriteLine("Computer will play first");
+            }
         }
         
     }
