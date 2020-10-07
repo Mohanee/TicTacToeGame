@@ -10,23 +10,44 @@ namespace TicTacToeGame
             Console.WriteLine("Hello, Welcome to TicTacToeGame");
             TicTacToe t = new TicTacToe();
             char[] board = t.CreateBoard();
+
+
             char pLetter = t.ChooseLetter();
             char cLetter='X';
             if(pLetter.Equals('X'))
             {
                 cLetter = 'O';
             }
-
             Console.WriteLine("Player's Letter = " + pLetter);
             Console.WriteLine("Computer's Letter = " + cLetter);
+
+
             t.PrintBoard(board);
-            t.FirstPlayToss();
-            bool playVal = true;
+
+
+            int k= t.FirstPlayToss();
+            if(k==1)
+            {
+                t.MakeAMove(board, pLetter, 1);
+                t.PrintBoard(board);
+                t.MakeAMove(board, cLetter, 2);
+                t.PrintBoard(board);
+            }
+            else
+            {
+                t.MakeAMove(board, cLetter,2);
+                t.PrintBoard(board);
+                t.MakeAMove(board, pLetter, 1);
+                t.PrintBoard(board);
+            }
+           // t.PrintBoard(board);
+           /* bool playVal = true;
             while (playVal)
             {
                 playVal = t.MakeAMove(board,pLetter);
+                
             }
-            t.WhoWon(board,pLetter,cLetter);
+            t.WhoWon(board,pLetter,cLetter);*/
 
         }
     }
@@ -75,6 +96,8 @@ namespace TicTacToeGame
                 Console.Write("\n");
                 Console.WriteLine("------------------------------------------------");
             }
+
+            Console.WriteLine("\n\n");
         }
 
         public bool check_Availability(char[] board, int k)
@@ -87,32 +110,53 @@ namespace TicTacToeGame
             return val;
         }
 
-        public bool MakeAMove(char[] board,char pLetter)
+        public void MakeAMove(char[] board,char pLetter, int k)
         {
-            Console.WriteLine("Choose a position among 1 to 9");
-            int choice = Convert.ToInt32(Console.ReadLine());
-            bool check_if_empty = check_Availability(board, choice);
-            if (check_if_empty == false)
+            if (k == 1)
             {
-                Console.WriteLine("The position you chose is full, Please choose another position");
+                Console.WriteLine("Choose a position among 1 to 9");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                bool check_if_empty = check_Availability(board, choice);
+                if (check_if_empty == false)
+                {
+                    Console.WriteLine("The position you chose is full, Please choose another position");
+                }
+                else
+                {
+                    Play(board, pLetter, choice);
+                   // PrintBoard(board);
+                }
             }
             else
             {
-                board[choice] = pLetter;
-                PrintBoard(board);
+                int pos = GetWinningMove(board, pLetter);
+                if (pos == 0)
+                {
+                    Random rn = new Random();
+                    pos = rn.Next(1, 10);
+                    if (check_Availability(board, pos))
+                    {
+                        Play(board, pLetter, pos);
+                        PrintBoard(board);
+                    }
+                    else
+                    {
+                        MakeAMove(board, pLetter, k);
+                    }
+                }
+                else
+                {
+                    Play(board, pLetter, pos);
+                }
             }
-            bool playVal = true;
-            Console.WriteLine("Want to play again? (Y/N)");
-            char playAgain = Convert.ToChar(Console.ReadLine());
-            if (playAgain.Equals('N'))
-            {
-                playVal = false;
-            }
-
-            return playVal;
         }
 
-        public void FirstPlayToss()
+        public void Play(char[] board, char pLetter, int pos)
+        {
+            board[pos] = pLetter;
+        }
+
+        public int FirstPlayToss()
         {
             string choice=null;
             bool val = true;
@@ -135,10 +179,12 @@ namespace TicTacToeGame
             if(rn.Next(0,2)==choice2)
             {
                 Console.WriteLine("You got your desired side.So, will play first");
+                return 1;
             }
             else
             {
                 Console.WriteLine("Computer will play first");
+                return 2;
             }
         }
 
@@ -189,6 +235,32 @@ namespace TicTacToeGame
                 Console.WriteLine("This is a Tie");
             }
             
+        }
+
+        public int GetWinningMove(char[] board,char playLetter)
+        {
+            bool won = false;
+            int pos = 0;
+            for(int i=1;i<10;i++)
+            {
+                char[] board2 = board;
+                if(check_Availability(board2, i))
+                {
+                    //MakeAMove(board2, playLetter, 2);
+                    board2[i] = playLetter;
+                    won = CheckIsWinner(board2, playLetter);
+                    if(won== true)
+                    {
+                        pos = i;
+                        break;
+                    }
+                    else
+                    {
+                        pos = 0;
+                    }
+                }
+            }
+            return pos;
         }
 
     }
