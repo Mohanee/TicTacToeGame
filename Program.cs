@@ -29,26 +29,14 @@ namespace TicTacToeGame
             Player p= t.FirstPlayToss();
             if(p==Player.USER)
             {
-                t.MakeAMove(board, pLetter, p);
-             //   t.PrintBoard(board);
-                t.MakeAMove(board, cLetter, Player.COMPUTER);
-             //   t.PrintBoard(board);
+                t.MakePlayerMove(board, pLetter);
+                t.MakeComputerMove(board, cLetter, pLetter);
             }
             else
             {
-                t.MakeAMove(board, cLetter, p);
-            //    t.PrintBoard(board);
-                t.MakeAMove(board, pLetter, Player.USER);
-              //  t.PrintBoard(board);
+                t.MakeComputerMove(board, cLetter, pLetter);
+                t.MakePlayerMove(board, pLetter);
             }
-           // t.PrintBoard(board);
-           /* bool playVal = true;
-            while (playVal)
-            {
-                playVal = t.MakeAMove(board,pLetter);
-                
-            }
-            t.WhoWon(board,pLetter,cLetter);*/
 
         }
     }
@@ -111,10 +99,14 @@ namespace TicTacToeGame
             return val;
         }
 
-        public void MakeAMove(char[] board,char pLetter, Player k)
+
+        public void Play(char[] board, char pLetter, int pos)
         {
-            if (k == Player.USER)
-            {
+            board[pos] = pLetter;
+        }
+
+        public void MakePlayerMove(char[] board,char pLetter)
+        {
                 Console.WriteLine("Choose a position among 1 to 9");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 bool check_if_empty = check_Availability(board, choice);
@@ -127,37 +119,43 @@ namespace TicTacToeGame
                     Play(board, pLetter, choice);
                     PrintBoard(board);
                 }
-            }
-            else
-            {
-                int pos = GetWinningMove(board, pLetter);
-                Console.WriteLine("pos =" + pos);
+        }
+       public void MakeComputerMove(char[] board, char cLetter, char pLetter)
+       {
+                int pos = GetWinningMove(board, cLetter);
+                int ppos = GetWinningMove(board, pLetter);
                 if (pos == 0)
                 {
-                    Random rn = new Random();
-                    pos = rn.Next(1, 10);
-                    if (check_Availability(board, pos))
+                    if (ppos != 0)
                     {
-                        Play(board, pLetter, pos);
+                        Play(board, cLetter, ppos);
                         PrintBoard(board);
                     }
                     else
                     {
-                        MakeAMove(board, pLetter, k);
+                        Random rn = new Random();
+                        pos = rn.Next(1, 10);
+                        if (check_Availability(board, pos))
+                        {
+                            Play(board, cLetter, pos);
+                            PrintBoard(board);
+                        }
+                        else
+                        {
+                            MakeComputerMove(board, cLetter, pLetter);
+                        }
                     }
                 }
                 else
                 {
-                    Play(board, pLetter, pos);
+                    Play(board, cLetter, pos);
                     PrintBoard(board);
                 }
-            }
+            
         }
 
-        public void Play(char[] board, char pLetter, int pos)
-        {
-            board[pos] = pLetter;
-        }
+
+
 
         public Player FirstPlayToss()
         {
@@ -240,14 +238,9 @@ namespace TicTacToeGame
             
         }
 
-        public int GetComputerMove(char[] board, char cLetter)
-        {
-            return (GetWinningMove(board, cLetter));
-        }
 
         public int GetWinningMove(char[] board,char playLetter)
         {
-            Console.WriteLine("Winning move called");
             bool won = false;
             int pos = 0;
             for(int i=1;i<10;i++)
