@@ -142,13 +142,21 @@ namespace TicTacToeGame
                         }
                         else if (k == 0)
                         {
-                            Random rn = new Random();
-                            pos = rn.Next(1, 10);
-                            if (check_Availability(board, pos))
+                            if (check_Availability(board, 5))
                             {
-                                Play(board, cLetter, pos);
+                                Play(board, cLetter, k);
                                 PrintBoard(board);
                             }
+                            else
+                            {
+                                Random rn = new Random();
+                                pos = rn.Next(1, 10);
+                                if (check_Availability(board, pos))
+                                {
+                                    Play(board, cLetter, pos);
+                                    PrintBoard(board);
+                                }
+                        }
                         }
                         else 
                         { 
