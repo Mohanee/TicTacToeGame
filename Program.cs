@@ -3,6 +3,7 @@ using System.Globalization;
 
 namespace TicTacToeGame
 {
+    public enum Player { USER, COMPUTER };
     class Program
     {
         static void Main(string[] args)
@@ -25,20 +26,20 @@ namespace TicTacToeGame
             t.PrintBoard(board);
 
 
-            int k= t.FirstPlayToss();
-            if(k==1)
+            Player p= t.FirstPlayToss();
+            if(p==Player.USER)
             {
-                t.MakeAMove(board, pLetter, 1);
-                t.PrintBoard(board);
-                t.MakeAMove(board, cLetter, 2);
-                t.PrintBoard(board);
+                t.MakeAMove(board, pLetter, p);
+             //   t.PrintBoard(board);
+                t.MakeAMove(board, cLetter, Player.COMPUTER);
+             //   t.PrintBoard(board);
             }
             else
             {
-                t.MakeAMove(board, cLetter,2);
-                t.PrintBoard(board);
-                t.MakeAMove(board, pLetter, 1);
-                t.PrintBoard(board);
+                t.MakeAMove(board, cLetter, p);
+            //    t.PrintBoard(board);
+                t.MakeAMove(board, pLetter, Player.USER);
+              //  t.PrintBoard(board);
             }
            // t.PrintBoard(board);
            /* bool playVal = true;
@@ -110,9 +111,9 @@ namespace TicTacToeGame
             return val;
         }
 
-        public void MakeAMove(char[] board,char pLetter, int k)
+        public void MakeAMove(char[] board,char pLetter, Player k)
         {
-            if (k == 1)
+            if (k == Player.USER)
             {
                 Console.WriteLine("Choose a position among 1 to 9");
                 int choice = Convert.ToInt32(Console.ReadLine());
@@ -124,12 +125,13 @@ namespace TicTacToeGame
                 else
                 {
                     Play(board, pLetter, choice);
-                   // PrintBoard(board);
+                    PrintBoard(board);
                 }
             }
             else
             {
                 int pos = GetWinningMove(board, pLetter);
+                Console.WriteLine("pos =" + pos);
                 if (pos == 0)
                 {
                     Random rn = new Random();
@@ -147,6 +149,7 @@ namespace TicTacToeGame
                 else
                 {
                     Play(board, pLetter, pos);
+                    PrintBoard(board);
                 }
             }
         }
@@ -156,7 +159,7 @@ namespace TicTacToeGame
             board[pos] = pLetter;
         }
 
-        public int FirstPlayToss()
+        public Player FirstPlayToss()
         {
             string choice=null;
             bool val = true;
@@ -179,12 +182,12 @@ namespace TicTacToeGame
             if(rn.Next(0,2)==choice2)
             {
                 Console.WriteLine("You got your desired side.So, will play first");
-                return 1;
+                return Player.USER;
             }
             else
             {
                 Console.WriteLine("Computer will play first");
-                return 2;
+                return Player.COMPUTER;
             }
         }
 
@@ -237,16 +240,21 @@ namespace TicTacToeGame
             
         }
 
+        public int GetComputerMove(char[] board, char cLetter)
+        {
+            return (GetWinningMove(board, cLetter));
+        }
+
         public int GetWinningMove(char[] board,char playLetter)
         {
+            Console.WriteLine("Winning move called");
             bool won = false;
             int pos = 0;
             for(int i=1;i<10;i++)
             {
-                char[] board2 = board;
-                if(check_Availability(board2, i))
+                char[] board2 = BoardCopy(board);
+                if (check_Availability(board2, i))
                 {
-                    //MakeAMove(board2, playLetter, 2);
                     board2[i] = playLetter;
                     won = CheckIsWinner(board2, playLetter);
                     if(won== true)
@@ -261,6 +269,15 @@ namespace TicTacToeGame
                 }
             }
             return pos;
+        }
+
+
+        public char[] BoardCopy(char[] board)
+        {
+            char[] boardCopy = new char[10];
+            Array.Copy(board, 0, boardCopy, 0, board.Length);
+
+            return boardCopy;
         }
 
     }
